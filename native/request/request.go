@@ -83,6 +83,11 @@ type Request struct {
 	Sequence         int             `json:"seq,omitempty"`            // 0 for the first ad, 1 for the second ad, and so on
 	Assets           []Asset         `json:"assets"`                   // An array of Asset Objects
 	Ext              json.RawMessage `json:"ext,omitempty"`
+
+	// Prior to VERSION 1.1, the specification could be interpreted as
+	// requiring the native request to have a root node with a single field "native"
+	// that would contain the Request as its value.
+	WasWrapped bool
 }
 
 type (
@@ -120,6 +125,7 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		}
 
 		*r = jn.Native
+		r.WasWrapped = true
 		return nil
 	}
 
