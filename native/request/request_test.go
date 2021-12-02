@@ -27,6 +27,7 @@ var _ = Describe("Request", func() {
 				{ID: 127, Required: 1, Data: &Data{TypeID: DataTypeDesc, Length: 140}},
 				{ID: 4, Video: &Video{MinDuration: 15, MaxDuration: 30, Protocols: []openrtb.Protocol{openrtb.ProtocolVAST2, openrtb.ProtocolVAST3}, MIMEs: []string{"video/mp4"}}},
 			},
+			IsWrapped: false,
 		}))
 	})
 
@@ -46,14 +47,16 @@ var _ = Describe("Request", func() {
 				{ID: 127, Required: 1, Data: &Data{TypeID: DataTypeDesc, Length: 140}},
 				{ID: 4, Video: &Video{MinDuration: 15, MaxDuration: 30, Protocols: []openrtb.Protocol{openrtb.ProtocolVAST2, openrtb.ProtocolVAST3}, MIMEs: []string{"video/mp4"}}},
 			},
+			IsWrapped: true,
 		}))
 	})
 
 	It("should parse json string correctly", func() {
 		req := fixture("testdata/request3.json")
 		Expect(req).To(Equal(&Request{
-			Version: "1.0",
-			Assets:  []Asset{},
+			Version:   "1.0",
+			Assets:    []Asset{},
+			IsWrapped: true,
 		}))
 	})
 
@@ -65,6 +68,7 @@ var _ = Describe("Request", func() {
 			Assets: []Asset{
 				{ID: 123, Required: 1, Title: &Title{Length: 140}},
 			},
+			IsWrapped: false,
 		}))
 	})
 })
