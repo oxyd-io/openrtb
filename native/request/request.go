@@ -87,7 +87,7 @@ type Request struct {
 	// Prior to VERSION 1.1, the specification could be interpreted as
 	// requiring the native request to have a root node with a single field "native"
 	// that would contain the Request as its value.
-	WasWrapped bool
+	IsWrapped bool
 }
 
 type (
@@ -125,7 +125,7 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		}
 
 		*r = jn.Native
-		r.WasWrapped = true
+		r.IsWrapped = true
 		return nil
 	}
 
